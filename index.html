@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ハチの巣発生場所（2025年）</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+        .leaflet-popup-content-wrapper {
+            font-family: sans-serif;
+            font-size: 14px;
+        }
+        .leaflet-popup-content img {
+            max-width: 200px;
+            height: auto;
+        }
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        var map = L.map('map').setView([36.3360211, 137.9123328], 18);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 20,
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        var popupStates = {};
+        var points = [
+            [36.3377969, 137.9074277],
+            [36.3378101, 137.9073801],
+            [36.3378733, 137.9073825]
+        ];
+
+        var contents = [
+            `<div class="popup-title">2025年6月12日</div><img src="images/1.jpg">`,
+            `<div class="popup-title">2025年6月12日</div><img src="images/2.jpg">`,
+            `<div class="popup-title">2025年6月12日</div><img src="images/3.jpg">`
+        ];
+
+        for (let i = 0; i < points.length; i++) {
+            let latlng = points[i];
+            let content = contents[i];
+            let marker = L.marker(latlng).addTo(map);
+            let popup = L.popup({ autoClose: false, closeOnClick: false }).setContent(content);
+            popupStates[i] = false;
+
+            marker.on('click', function () {
+                if (popupStates[i]) {
+                    map.closePopup(popup);
+                    popupStates[i] = false;
+                } else {
+                    popup.setLatLng(latlng).openOn(map);
+                    popupStates[i] = true;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
