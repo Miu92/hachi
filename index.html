@@ -20,6 +20,10 @@
             max-width: 200px;
             height: auto;
         }
+        .popup-title {
+            font-weight: bold;
+            color: black;
+        }
     </style>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -102,9 +106,29 @@
             `<div class="popup-title">和さび堂搬入口出たところの木(高さ約4mほどの位置)（小型スズメバチ）</div><img src="images/31.jpg">`
         ];
 
+        var redIcon = new L.Icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+            shadowUrl: 'https://unpkg.com/leaflet/dist/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
+
+        var redPoints = [
+            [36.3378636, 137.9089415],
+            [36.3357375, 137.9125779],
+            [36.3383830, 137.9088000],
+            [36.3395740, 137.9084160]
+        ];
+
         for (let i = 0; i < points.length; i++) {
             let latlng = points[i];
             let content = contents[i];
+            let icon = new L.Icon.Default();
+            if (redPoints.some(p => p[0] === latlng[0] && p[1] === latlng[1])) {
+                icon = redIcon;
+            }
             let marker = L.marker(latlng).addTo(map);
             let popup = L.popup({ autoClose: false, closeOnClick: false }).setContent(content);
             popupStates[i] = false;
