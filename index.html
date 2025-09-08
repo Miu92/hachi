@@ -74,7 +74,7 @@
 
         var contents = [
             `<div class="popup-title">本社事務所西側（1ヶ所）</div><img src="images/1.jpg">`,
-            `<div class="popup-title">洗濯物干し周辺（1ヶ所）</div><img src="images/2.jpg">`,
+            `<div class="popup-title">洗濯物干し周辺（2ヶ所）</div><img src="images/2.jpg">`,
             `<div class="popup-title">冷凍冷蔵庫製御盤周辺（1ヶ所）</div><img src="images/3.jpg">`,
             `<div class="popup-title">灯油タンク付近（1ヶ所）</div><img src="images/4.jpg">`,
             `<div class="popup-title">喫煙所付近（7ヶ所）</div><img src="images/5.jpg">`,
@@ -129,7 +129,7 @@
             if (redPoints.some(p => p[0] === latlng[0] && p[1] === latlng[1])) {
                 icon = redIcon;
             }
-            let marker = L.marker(latlng).addTo(map);
+            let marker = L.marker(latlng, { icon: icon }).addTo(map);
             let popup = L.popup({ autoClose: false, closeOnClick: false }).setContent(content);
             popupStates[i] = false;
 
@@ -142,7 +142,6 @@
                     popupStates[i] = true;
                 }
             });
-
         }
     </script>
 </body>
